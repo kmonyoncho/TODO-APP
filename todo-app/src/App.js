@@ -3,6 +3,7 @@ import './App.css';
 import TodoC from './TodoC';
 import { Button,FormControl, InputLabel,Input } from '@material-ui/core';
 import db from './firebase';
+import firebase from "firebase";
 function App() {
   const [todos,setTodos]=useState([]);
   const[input,setInput]=useState('');
@@ -15,11 +16,14 @@ db.collection('todos').onSnapshot(snapshot=>{
 })
 }, []);
 
-
+//CREATE NEW TODO
   const addTodo = (event) =>{
     //this will fire when the button is clicked
    event.preventDefault();//stop refresh
-  
+  db.collection('todos').add({
+    todo:input,
+    timestamp:firebase.firestore.FieldValue.serverTimestamp()
+  })
     setTodos([...todos,input]);
     setInput(''); //clear up the input
   }
