@@ -1,13 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import TodoC from './TodoC';
 import { Button,FormControl, InputLabel,Input } from '@material-ui/core';
-
+import db from './firebase';
 function App() {
   const [todos,setTodos]=useState([]);
   const[input,setInput]=useState('');
  //when app loads listen to the database and
  // fetch new todos as they get added/removed
+useEffect(() => {
+//this code here fires when the app.js loads
+db.collection('todos').onSnapshot(snapshot=>{
+  setTodos(snapshot.docs.map(doc=>doc.data().todo))
+})
+}, []);
+
 
   const addTodo = (event) =>{
     //this will fire when the button is clicked
