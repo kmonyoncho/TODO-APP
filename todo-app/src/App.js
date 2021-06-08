@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Button from '@material-ui/core/Button';
 import './App.css';
 
 function App() {
@@ -8,14 +9,21 @@ function App() {
 
   const addTodo = (event) =>{
     //this will fire when the button is clicked
+   event.preventDefault();//stop refresh
     console.log('The button clicked');
     setTodos([...todos,input]);
+    setInput(''); //clear up the input
   }
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <h1>Hello Funsoft Programmers</h1>
+    
       <input value={input} onChange={event=> setInput(event.target.value)}/>
-      <button onClick={addTodo}>Add Todo</button>
+      <Button type="submit" onClick={addTodo} variant="contained" color="primary">
+      Add Todo
+</Button>
+      {/* <Button onClick={addTodo}>Add Todo</Button> */}
+      
       <ul>
         {todos.map(todo =>(
         <li>{todo}</li>
