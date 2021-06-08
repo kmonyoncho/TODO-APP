@@ -1,16 +1,18 @@
 import React, {useState} from 'react';
-import Button from '@material-ui/core/Button';
 import './App.css';
+import TodoC from './TodoC';
+import { Button,FormControl, InputLabel,Input } from '@material-ui/core';
 
 function App() {
-  const [todos,setTodos]=useState(['Take dogs for a walk','Take the rubish out','Welcome to funsoft systems']);
+  const [todos,setTodos]=useState([]);
   const[input,setInput]=useState('');
-  console.log(input);
+ //when app loads listen to the database and
+ // fetch new todos as they get added/removed
 
   const addTodo = (event) =>{
     //this will fire when the button is clicked
    event.preventDefault();//stop refresh
-    console.log('The button clicked');
+  
     setTodos([...todos,input]);
     setInput(''); //clear up the input
   }
@@ -18,15 +20,19 @@ function App() {
     <div className="App">
       <h1>Hello Funsoft Programmers</h1>
     
-      <input value={input} onChange={event=> setInput(event.target.value)}/>
-      <Button type="submit" onClick={addTodo} variant="contained" color="primary">
+      <FormControl>
+        <InputLabel>Write a Todo</InputLabel>
+        <Input value={input} onChange={event=> setInput(event.target.value)}/>
+      </FormControl>
+      <Button disabled={!input} type="submit" onClick={addTodo} variant="contained" color="primary">
       Add Todo
 </Button>
       {/* <Button onClick={addTodo}>Add Todo</Button> */}
       
       <ul>
         {todos.map(todo =>(
-        <li>{todo}</li>
+          <TodoC text={todo}/>
+        // <li>{todo}</li>
         ))}
         
       </ul>
